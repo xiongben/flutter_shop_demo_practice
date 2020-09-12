@@ -1,12 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import '../service/service_method.dart';
 
+class HomePage extends StatefulWidget {
+  HomePage({Key key}) : super(key: key);
 
-class HomePage extends StatelessWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String homePageContent = "getting data now...";
+  @override
+  void initState() { 
+    getHomePageContent().then((val){
+      setState((){
+        homePageContent = val.toString();
+      });
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text("home page"),),
+      appBar: AppBar(title: Text("human life+"),),
+      body: SingleChildScrollView(
+        
+        child: Text(homePageContent),
+      ),
     );
+
   }
 }
