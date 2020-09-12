@@ -35,10 +35,11 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
   }
   @override
   Widget build(BuildContext context) {
+    var formDataParams = {'lon':'115.02932','lat':'35.76189'};
     return Scaffold(
       appBar: AppBar(title: Text("human life+"),),
       body: FutureBuilder(
-        future: getHomePageContent(),
+        future: request('homePageContent',formDataParams),
         // initialData: InitialData,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
@@ -49,6 +50,13 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
              String leaderImage = data['data']['shopInfo']['leaderImage'];
              String leaderPhone = data['data']['shopInfo']['leaderPhone'];
              List<Map> recommendList = (data['data']['recommend'] as List).cast();
+            String floor1Title = data['data']['floor1Pic']['PICTURE_ADDRESS'];
+            String floor2Title = data['data']['floor2Pic']['PICTURE_ADDRESS'];
+            String floor3Title = data['data']['floor3Pic']['PICTURE_ADDRESS'];
+             List<Map> floorGoodsList1 = (data['data']['floor1'] as List).cast();
+             List<Map> floorGoodsList2 = (data['data']['floor2'] as List).cast();
+             List<Map> floorGoodsList3 = (data['data']['floor3'] as List).cast();
+             
              
              return SingleChildScrollView(
                child: Column(
@@ -58,6 +66,13 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
                  AdBanner(adPicture: adPicture,),
                  LeaderPhone(leaderImage: leaderImage, leaderPhone: leaderPhone),
                  Recommend(recommendList: recommendList),
+                 FloorTitle(picture_address: floor1Title,),
+                 FloorContent(floorGoodsList: floorGoodsList1,),
+                 FloorTitle(picture_address: floor2Title,),
+                 FloorContent(floorGoodsList: floorGoodsList2,),
+                 FloorTitle(picture_address: floor3Title,),
+                 FloorContent(floorGoodsList: floorGoodsList3,),
+                 HotGoods(),
                ],
                ),
              );
@@ -119,7 +134,7 @@ class TopNavigator extends StatelessWidget {
       this.navigatorList.removeRange(10, this.navigatorList.length);
     }
     return Container(
-      height: ScreenUtil().setHeight(270),
+      height: ScreenUtil().setHeight(320),
       padding: EdgeInsets.all(3.0),
       child: GridView.count(
         crossAxisCount: 5,
@@ -256,6 +271,115 @@ class Recommend extends StatelessWidget {
     );
   }
 }
+
+class FloorTitle extends StatelessWidget {
+  final String picture_address;
+  const FloorTitle({Key key, this.picture_address}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(8.0),
+      child: Image.network(picture_address),
+    );
+  }
+}
+
+//楼层商品列表
+class FloorContent extends StatelessWidget {
+  final List floorGoodsList;
+  const FloorContent({Key key, this.floorGoodsList}) : super(key: key);
+  Widget _goodsRow() {
+    return Row(  
+      children: <Widget>[
+        _goodsItem(floorGoodsList[0]),
+        Column(  
+          children: <Widget>[
+            _goodsItem(floorGoodsList[1]),
+            _goodsItem(floorGoodsList[2]),
+          ],
+        )
+      ],
+    );
+  }
+  
+
+
+  Widget _goodsItem(Map goods) {
+    return Container(  
+      width: ScreenUtil().setWidth(375),
+      // height: ScreenUtil().setHeight(200),
+      // decoration: BoxDecoration(  
+      //   color: Colors.blue,
+      // ),
+      child: InkWell(  
+        onTap: (){},
+        child: Image.network(goods['image']),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // decoration: BoxDecoration(  
+      //   color: Colors.yellow,
+      // ),
+      child: _goodsRow(),
+      margin: EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
+    );
+  }
+}
+
+
+
+class HotGoods extends StatefulWidget {
+  HotGoods({Key key}) : super(key: key);
+
+  @override
+  _HotGoodsState createState() => _HotGoodsState();
+}
+
+class _HotGoodsState extends State<HotGoods> {
+  
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    var page = 1;
+    request('homePageBelowConten',page).then((val){
+      print(val);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+       child: Text("666666"),
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
