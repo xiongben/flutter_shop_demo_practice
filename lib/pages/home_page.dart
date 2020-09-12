@@ -34,9 +34,11 @@ class _HomePageState extends State<HomePage> {
           if (snapshot.hasData) {
              var data = json.decode(snapshot.data.toString());
              List<Map> swiper = (data['data']['slides'] as List).cast();
+             List<Map> navgatorList = (data['data']['category'] as List).cast();
              return Column(
                children: <Widget>[
-                 SwiperDiy(swiperDateList: swiper,)
+                 SwiperDiy(swiperDateList: swiper,),
+                 TopNavigator(navigatorList: navgatorList,),
                ],
                );
           }else{
@@ -59,7 +61,6 @@ class SwiperDiy extends StatelessWidget {
     print('设备像素密度:${ScreenUtil.pixelRatio}');
     print('设备高:${ScreenUtil.screenHeight}');
     print('设备宽:${ScreenUtil.screenWidth}');
-    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
     return Container(
       height: ScreenUtil().setHeight(333),
       width: ScreenUtil().setWidth(750),
@@ -70,6 +71,42 @@ class SwiperDiy extends StatelessWidget {
         itemCount: swiperDateList.length,
         pagination: SwiperPagination(),
         autoplay: true,
+      ),
+    );
+  }
+}
+
+class TopNavigator extends StatelessWidget {
+  final List navigatorList;
+  const TopNavigator({Key key, this.navigatorList}) : super(key: key);
+
+ 
+  Widget _gridViewItemUI(BuildContext context, item) {
+    return InkWell( 
+      onTap: (){print("click the nav");},
+      child: Column(
+        children: <Widget>[
+          Image.network(item['image'],width: ScreenUtil().setWidth(95),),
+          Text(item["mallCategoryName"]),
+        ],
+        ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (this.navigatorList.length > 10){
+      this.navigatorList.removeRange(10, this.navigatorList.length);
+    }
+    return Container(
+      height: ScreenUtil().setHeight(320),
+      padding: EdgeInsets.all(3.0),
+      child: GridView.count(
+        crossAxisCount: 5,
+        padding: EdgeInsets.all(5.0),
+        children: navigatorList.map((item){
+           return _gridViewItemUI(context, item);
+        }).toList(),
       ),
     );
   }
