@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import './pages/index_page.dart';
+import 'package:provide/provide.dart';
+import './provide/count.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  var counter2 = Counter();
+  var provides = Providers();
+  provides..provide(Provider<Counter>.value(counter2));
+
+   runApp(ProviderNode(child: MyApp(), providers: provides,) );
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.

@@ -23,7 +23,12 @@ class _CategoryPageState extends State<CategoryPage> {
       body: Container(
         child: Row(
           children: <Widget>[
-            LeftCategoryNav()
+            LeftCategoryNav(),
+            Column(
+              children: <Widget>[
+                RightCategoryNavState(),
+              ],
+            ),
           ],
         ),
       ),
@@ -94,5 +99,51 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
       });
       // list.data.forEach((item)=>print(item.mallCategoryName));
     });
+  }
+}
+
+
+class RightCategoryNavState extends StatefulWidget {
+  @override
+  _RightCategoryNavStateState createState() => _RightCategoryNavStateState();
+}
+
+class _RightCategoryNavStateState extends State<RightCategoryNavState> {
+
+  List list = ["二锅头","二锅头","二锅头","二锅头","二锅头","二锅头","二锅头","二锅头","二锅头"];
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: ScreenUtil().setHeight(80),
+      width: ScreenUtil().setWidth(570),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          bottom: BorderSide(width: 1,color: Colors.black12)
+        )
+      ),
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: list.length,
+        itemBuilder: (context, index){
+          return _rightInkWell(list[index]);
+        },
+      ),
+    );
+  }
+
+  Widget _rightInkWell(String item){
+    return InkWell(
+      onTap: (){},
+      child: Container(
+         padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
+         child: Text(
+           item,
+           style: TextStyle(fontSize: ScreenUtil().setSp(28)),
+         ),
+      ),
+    );
   }
 }
