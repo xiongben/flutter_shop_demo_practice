@@ -9,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../service/service_method.dart';
+import '../routers/application.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -97,7 +98,6 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
                  var formData = {'page': page};
                  await request('homePageBelowConten',formData: formData).then((val){
                    var data = json.decode(val.toString());
-                   print(data['data']);
                    if(data['data'] != null){
                      List<Map> newGoodsList = (data['data'] as List).cast();
                      setState(() {
@@ -141,7 +141,9 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
     if(hotGoodsList.length != 0){
       List<Widget> listWidget = hotGoodsList.map((val){
         return InkWell(
-          onTap: (){},
+          onTap: (){
+            Application.router.navigateTo(context, '/detail?id=${val['goodsId']}');
+          },
           child: Container(
             width: ScreenUtil().setWidth(372),
             color: Colors.white,
