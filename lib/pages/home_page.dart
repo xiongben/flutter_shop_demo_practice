@@ -210,7 +210,12 @@ class SwiperDiy extends StatelessWidget {
       width: ScreenUtil().setWidth(750),
       child: Swiper(
         itemBuilder: (BuildContext context, int index){
-          return Image.network("${swiperDateList[index]['image']}",fit: BoxFit.fill,);
+          return InkWell(
+            onTap: (){
+                Application.router.navigateTo(context, "/detail?id=${swiperDateList[index]['goodsId']}");
+            },
+            child: Image.network("${swiperDateList[index]['image']}",fit: BoxFit.fill,),
+          );
         },
         itemCount: swiperDateList.length,
         pagination: SwiperPagination(),
@@ -320,7 +325,9 @@ class Recommend extends StatelessWidget {
   
   Widget _item(BuildContext context, index) {
     return InkWell(
-      onTap: (){},
+      onTap: (){
+        Application.router.navigateTo(context, "/detail?id=${recommendList[index]['goodsId']}");
+      },
       child: Container(
         height: ScreenUtil().setHeight(330),
         width: ScreenUtil().setWidth(250),
@@ -399,14 +406,15 @@ class FloorTitle extends StatelessWidget {
 class FloorContent extends StatelessWidget {
   final List floorGoodsList;
   const FloorContent({Key key, this.floorGoodsList}) : super(key: key);
-  Widget _goodsRow() {
+
+  Widget _goodsRow(BuildContext context) {
     return Row(  
       children: <Widget>[
-        _goodsItem(floorGoodsList[0]),
+        _goodsItem(context,floorGoodsList[0]),
         Column(  
           children: <Widget>[
-            _goodsItem(floorGoodsList[1]),
-            _goodsItem(floorGoodsList[2]),
+            _goodsItem(context,floorGoodsList[1]),
+            _goodsItem(context,floorGoodsList[2]),
           ],
         )
       ],
@@ -415,7 +423,7 @@ class FloorContent extends StatelessWidget {
   
 
 
-  Widget _goodsItem(Map goods) {
+  Widget _goodsItem(BuildContext context,Map goods) {
     return Container(  
       width: ScreenUtil().setWidth(375),
       // height: ScreenUtil().setHeight(200),
@@ -423,7 +431,9 @@ class FloorContent extends StatelessWidget {
       //   color: Colors.blue,
       // ),
       child: InkWell(  
-        onTap: (){},
+        onTap: (){
+          Application.router.navigateTo(context, "/detail?id=${goods['goodsId']}");
+        },
         child: Image.network(goods['image']),
       ),
     );
@@ -435,7 +445,7 @@ class FloorContent extends StatelessWidget {
       // decoration: BoxDecoration(  
       //   color: Colors.yellow,
       // ),
-      child: _goodsRow(),
+      child: _goodsRow(context),
       margin: EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
     );
   }
