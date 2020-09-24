@@ -333,8 +333,8 @@ class Recommend extends StatelessWidget {
         width: ScreenUtil().setWidth(250),
         padding: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
-          color: Colors.pink,
-          border: Border( 
+          color: Colors.white,
+          border: Border(
             left: BorderSide(width: 1, color: Colors.black12)
           )
         ),
@@ -380,9 +380,6 @@ class Recommend extends StatelessWidget {
     return Container(
       height: ScreenUtil().setHeight(440),
       margin: EdgeInsets.only(top:10.0),
-      decoration: BoxDecoration(
-        color: Colors.yellow,
-      ),
       child: Column(  
         children: <Widget>[
           _titleWidget(context),
