@@ -202,9 +202,9 @@ class SwiperDiy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('设备像素密度:${ScreenUtil.pixelRatio}');
-    print('设备高:${ScreenUtil.screenHeight}');
-    print('设备宽:${ScreenUtil.screenWidth}');
+    // print('设备像素密度:${ScreenUtil.pixelRatio}');
+    // print('设备高:${ScreenUtil.screenHeight}');
+    // print('设备宽:${ScreenUtil.screenWidth}');
     return Container(
       height: ScreenUtil().setHeight(333),
       width: ScreenUtil().setWidth(750),
@@ -333,7 +333,7 @@ class Recommend extends StatelessWidget {
         width: ScreenUtil().setWidth(250),
         padding: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.pink,
           border: Border( 
             left: BorderSide(width: 1, color: Colors.black12)
           )
@@ -362,8 +362,9 @@ class Recommend extends StatelessWidget {
 
   //横向列表
   Widget _recommendList(BuildContext context) {
+    
     return Container(  
-      height: ScreenUtil().setHeight(330),
+      height: ScreenUtil().setHeight(370),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: recommendList.length,
@@ -377,8 +378,11 @@ class Recommend extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenUtil().setHeight(380),
+      height: ScreenUtil().setHeight(440),
       margin: EdgeInsets.only(top:10.0),
+      decoration: BoxDecoration(
+        color: Colors.yellow,
+      ),
       child: Column(  
         children: <Widget>[
           _titleWidget(context),

@@ -40,7 +40,12 @@ class IndexPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.instance = ScreenUtil(width: 750, height: 1550)..init(context);
+    // print('设备像素密度:${ScreenUtil.pixelRatio}');
+    // print('设备高:${ScreenUtil.screenHeight}');
+    // print('设备宽:${ScreenUtil.screenWidth}');
+    final widthNum = 750.0;
+    final heightNum = widthNum * ScreenUtil.screenHeight / ScreenUtil.screenWidth;
+    ScreenUtil.instance = ScreenUtil(width: widthNum, height: heightNum)..init(context);
     return Provide<CurrentIndexProvide>(
       builder: (context,child,val){
         int currentIndex = Provide.value<CurrentIndexProvide>(context).currentIndex;
